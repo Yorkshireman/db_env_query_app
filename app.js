@@ -32,6 +32,8 @@ app.get('/show_all_teams', function(req, res) {
   });
 });
 
+// need to change this into an independent method that RETURNS true or false, then call it from an app.get to display true or false to the screen
+
 app.get('/is_token_present', function(req, res) {
   MongoClient.connect(dbUri, function(err, db) {
     assert.equal(null, err);
