@@ -33,14 +33,12 @@ app.get('/show_all_teams', function(req, res) {
 
 // this is the attempt to separate out the isTokenValid method (see note below)
 app.get('/is_token_valid', function() {
-  if (isTokenValid(validToken)) {
-    console.log("Token is Valid");
-  } else {
-    console.log("Token is Invalid");
-  }
+  isTokenValid(invalidToken, function(result) {
+    console.log(result);
+  })
 });
 
-isTokenValid = function(token) {
+isTokenValid = function(token, printResultCallbackFunction) {
   MongoClient.connect(dbUri, function(err, db) {
     assert.equal(null, err);
     console.log("Connected correctly to mongodb server.");
@@ -51,19 +49,17 @@ isTokenValid = function(token) {
       if(err) {
         console.log(err);
       }
-      console.log("COUNT:")
-      console.log(count);
-      // I think it's safe to assume the token will always be unique in the database
       if (count == 1) {
-        console.log("true from within isTokenValid");
-        return true;
+        printResultCallbackFunction("Token Valid");
       } else if (count == 0) {
-        console.log("false from within isTokenValid");
-        return false;
+        printResultCallbackFunction("Token Invalid");
       }
     });
+
+    // printResultCallbackFunction(result);
   });  
 }
+
 
 // need to change this into an independent method that RETURNS true or false, then call it from an app.get to display true or false to the screen
 
