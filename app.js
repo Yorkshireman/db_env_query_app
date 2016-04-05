@@ -38,7 +38,7 @@ app.get('/is_token_valid', function() {
   })
 });
 
-isTokenValid = function(token, printResultCallbackFunction) {
+isTokenValid = function(token, callback) {
   MongoClient.connect(dbUri, function(err, db) {
     assert.equal(null, err);
     console.log("Connected correctly to mongodb server.");
@@ -50,13 +50,11 @@ isTokenValid = function(token, printResultCallbackFunction) {
         console.log(err);
       }
       if (count == 1) {
-        printResultCallbackFunction("Token Valid");
+        callback("Token Valid");
       } else if (count == 0) {
-        printResultCallbackFunction("Token Invalid");
+        callback("Token Invalid");
       }
     });
-
-    // printResultCallbackFunction(result);
   });  
 }
 
