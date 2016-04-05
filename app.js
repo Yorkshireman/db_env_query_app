@@ -34,7 +34,7 @@ app.get('/show_all_teams', function(req, res) {
 // this is the attempt to separate out the isTokenValid method (see note below)
 app.get('/is_token_valid', function() {
   isTokenValid(invalidToken, function(result) {
-    console.log(result);
+    console.log(result); //how do I get this to work with 'res.send'?
   })
 });
 
